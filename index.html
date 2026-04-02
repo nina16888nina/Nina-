@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>客製化開運轉運站 NEW</title>
+  <title>客製化轉運站</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#FFFDF9] text-slate-800">
+<body class="bg-[#FFFDF9] text-slate-800 font-sans">
   <div id="app"></div>
 
   <script>
@@ -21,211 +21,165 @@
     const RECOMMENDATIONS = {
       love: {
         ritual: '桃花轉運・貴人引動祈福 🌹',
-        products: ['人緣鹽 🧼', '魔法五行能量香氛 ✨', '芙蓉精油 🌿'],
-        expertAdvice: '💖 感情對症下藥：\n一對一八字諮詢更能精確鎖定問題！求對象、合盤除小人、減少爭吵，讓彼此更好溝通，找回甜蜜磁場。'
+        products: ['人緣鹽 🧼', '能量香氛 ✨', '芙蓉精油 🌿'],
+        advice: '💖 感情對症下藥：求對象、合盤除小人、減少爭吵，讓彼此更好溝通，找回甜蜜磁場。'
       },
       wealth: {
         ritual: '鎮煞護財・補財庫祈福 🧧',
-        products: ['招財鹽 🪙', '羅盤化煞 🧭', '魔法五行能量香氛 ✨'],
-        expertAdvice: '💰 財運對症下藥：\n除了補財庫，建議諮詢專屬財位在家安財甕，鎖住財氣不漏財，針對您的命盤精準催財。'
+        products: ['招財鹽 🪙', '羅盤化煞 🧭', '能量香氛 ✨'],
+        advice: '💰 財運對症下藥：除了補財庫，建議諮詢專屬財位「安財甕」，鎖住財氣不漏財。'
       },
       career: {
         ritual: '斬小人・事業破局祈福 ⚔️',
-        products: ['羅盤化煞 🧭', '淨化鹽 🧂', '魔法五行能量香氛 ✨'],
-        expertAdvice: '🚀 事業對症下藥：\n掌握流年大運，精確避開職場是非。針對辦公桌位化煞，提升貴人助力，讓升遷之路無阻礙。'
+        products: ['羅盤化煞 🧭', '淨化鹽 🧂', '能量香氛 ✨'],
+        advice: '🚀 事業對症下藥：掌控流年大運，針對辦公桌位化煞，提升貴人助力，避開是非。'
       },
       family: {
         ritual: '祭祖孝親・穩定家運祈福 🕯️',
         products: ['淨化鹽 🧂', '芙蓉沐浴乳 🛀', '羅盤化煞 🧭'],
-        expertAdvice: '🏡 家運對症下藥：\n陽宅磁場校正，找出家中的不和諧因素。針對個人八字調整居住能量，讓全家人相處更自在、家運更穩固。'
+        advice: '🏡 家運對症下藥：陽宅磁場校正，找出不和諧因素，針對個人八字調整居住能量。'
       },
       study: {
         ritual: '文昌開運・心神安定祈福 📝',
-        products: ['芙蓉精油 🌿', '淨化鹽 🧂', '魔法五行能量香氛 ✨'],
-        expertAdvice: '📖 課業對症下藥：\n找出孩子的個人文昌方位。透過諮詢針對學習弱點進行引導，安定心神，讓讀書效率事半功倍。'
+        products: ['芙蓉精油 🌿', '淨化鹽 🧂', '能量香氛 ✨'],
+        advice: '📖 課業對症下藥：找出個人文昌方位。針對學習弱點進行引導，安定心神，事半功倍。'
       }
     };
 
     let selectedId = null;
 
-    function getLineHref() {
-      if (!selectedId) return "https://lin.ee/6s9hIVx";
+    function handleLineRedirect() {
+      if (!selectedId) return;
 
       const currentSit = SITUATIONS.find(s => s.id === selectedId);
       const currentRec = RECOMMENDATIONS[selectedId];
 
       const message =
-        `老師您好！我想預約諮詢 ✨\n\n` +
+        `老師您好！我想預約諮詢 ✨\n` +
         `📍 我的狀況：${currentSit.label} ${currentSit.emoji}\n` +
         `🕯️ 建議祈福：${currentRec.ritual}\n` +
         `📦 建議配套：${currentRec.products.join('、')}\n\n` +
-        `想請老師針對我的問題「對症下藥」進行一對一八字諮詢！🎯`;
+        `我想針對我的問題「對症下藥」進行一對一諮詢！🎯\n翻轉運勢找安沂，順遂不遲疑！`;
 
-      return `https://line.me/R/share/text/?text=${encodeURIComponent(message)}`;
+      const finalUrl = `https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
+      window.location.href = finalUrl;
     }
 
     function renderHome() {
       return `
-        <header class="bg-white border-b-4 border-yellow-300 py-10 px-4 text-center shadow-sm relative overflow-hidden">
-          <div class="absolute top-0 left-0 p-4 opacity-10 text-4xl">🌸</div>
-          <div class="absolute bottom-0 right-0 p-4 opacity-10 text-4xl">🌙</div>
-
-          <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-sm mb-3">
-            🌸 專業命理諮詢小助手
+        <header class="bg-white border-b-4 border-yellow-300 py-12 px-4 text-center shadow-sm">
+          <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-xs mb-3">
+             🌸 專業命理諮詢・對症下藥
           </div>
-          <h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 mb-2">
-            客製化開運轉運站
-          </h1>
-          <p class="mt-2 text-slate-600 font-medium max-w-xs mx-auto text-sm leading-relaxed">
-            我是會預測孩子今天會不會哭鬧的命理師 ✨<br/>
-            為您引導最適合的能量方向
+          <h1 class="text-3xl font-black text-slate-900 mb-2">客製化轉運站</h1>
+          <p class="mt-2 text-slate-600 font-black text-base tracking-wide">
+            翻轉運勢找安沂，順遂不遲疑 ✨
           </p>
         </header>
 
-        <main class="max-w-2xl mx-auto px-4 py-8">
-          <div class="space-y-8">
-            <div class="text-center">
-              <h2 class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
-                <span class="text-yellow-500">✨</span>
-                請選取您目前的狀況
-                <span class="text-yellow-500">✨</span>
-              </h2>
-              <p class="text-slate-400 mt-1 text-xs">選擇問題後，系統會自動幫您整理好需求內容喔！</p>
-            </div>
-
+        <main class="max-w-md mx-auto px-4 py-8">
+          <div class="space-y-6">
+            <h2 class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
+              <span class="text-yellow-500">⭐</span>
+              請選取您的諮詢類別
+            </h2>
             <div class="grid grid-cols-1 gap-4">
               ${SITUATIONS.map((sit) => `
                 <button
                   onclick="selectSituation('${sit.id}')"
-                  class="flex items-center p-5 bg-white rounded-3xl border-2 ${sit.border} shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.1)] active:translate-y-1 transition-all text-left group w-full"
+                  class="flex items-center p-6 bg-white rounded-[2rem] border-2 ${sit.border} shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] active:translate-y-1 transition-all text-left w-full"
                 >
-                  <div class="text-4xl mr-5 group-hover:scale-110 transition-transform">
-                    ${sit.emoji}
-                  </div>
-                  <div class="flex-1">
-                    <span class="text-lg font-black text-slate-800">${sit.label}</span>
-                    <p class="text-xs text-slate-400 mt-1 italic">點擊查看建議配套 🌈</p>
-                  </div>
-                  <div class="w-5 h-5 text-slate-300 group-hover:text-yellow-400 transition-colors text-xl">⚡</div>
+                  <span class="text-4xl mr-4">${sit.emoji}</span>
+                  <span class="text-lg font-black text-slate-800 flex-1">${sit.label}</span>
+                  <span class="text-yellow-400 text-xl">⚡</span>
                 </button>
               `).join('')}
             </div>
           </div>
         </main>
 
-        <footer class="text-center text-slate-300 text-[10px] mt-4 px-4 pb-10">
-          © 專業命理諮詢服務 | 心誠則靈 能量加持 🌸
+        <footer class="text-center text-slate-300 text-[10px] pb-10">
+          © 專業命理諮詢服務 🌸 心誠則靈
         </footer>
       `;
     }
 
     function renderResult() {
-      const currentSit = SITUATIONS.find(s => s.id === selectedId);
       const currentRec = RECOMMENDATIONS[selectedId];
+      const currentSit = SITUATIONS.find(s => s.id === selectedId);
 
       return `
-        <header class="bg-white border-b-4 border-yellow-300 py-10 px-4 text-center shadow-sm relative overflow-hidden">
-          <div class="absolute top-0 left-0 p-4 opacity-10 text-4xl">🌸</div>
-          <div class="absolute bottom-0 right-0 p-4 opacity-10 text-4xl">🌙</div>
-
-          <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-sm mb-3">
-            🌸 專業命理諮詢小助手
+        <header class="bg-white border-b-4 border-yellow-300 py-12 px-4 text-center shadow-sm">
+          <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-xs mb-3">
+             🌸 專業命理諮詢・對症下藥
           </div>
-          <h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 mb-2">
-            客製化開運轉運站
-          </h1>
-          <p class="mt-2 text-slate-600 font-medium max-w-xs mx-auto text-sm leading-relaxed">
-            我是會預測孩子今天會不會哭鬧的命理師 ✨<br/>
-            為您引導最適合的能量方向
+          <h1 class="text-3xl font-black text-slate-900 mb-2">客製化轉運站</h1>
+          <p class="mt-2 text-slate-600 font-black text-base tracking-wide">
+            翻轉運勢找安沂，順遂不遲疑 ✨
           </p>
         </header>
 
-        <main class="max-w-2xl mx-auto px-4 py-8">
-          <div>
+        <main class="max-w-md mx-auto px-4 py-8">
+          <div class="space-y-6">
             <button
               onclick="goBack()"
-              class="mb-6 flex items-center font-bold text-slate-500 hover:text-indigo-600 transition-colors"
+              class="flex items-center font-bold text-slate-400 hover:text-indigo-600"
             >
-              ← 換個問題選選看
+              ← 返回重新選擇
             </button>
 
-            <div class="bg-white rounded-[2.5rem] shadow-2xl border-4 border-slate-900 overflow-hidden">
-              <div class="bg-slate-900 p-8 text-center text-white relative">
-                <div class="absolute top-2 left-4 text-2xl opacity-20">✨</div>
-                <div class="absolute bottom-2 right-4 text-2xl opacity-20">🌙</div>
-                <div class="text-5xl mb-4">${currentSit.emoji}</div>
-                <h2 class="text-2xl font-black">【${currentSit.label}】諮詢清單</h2>
+            <div class="bg-white rounded-[2.5rem] shadow-xl border-4 border-slate-900 overflow-hidden">
+              <div class="bg-slate-900 p-8 text-center text-white">
+                <div class="text-5xl mb-3">${currentSit.emoji}</div>
+                <h2 class="text-2xl font-black italic">諮詢方案已備妥</h2>
               </div>
 
               <div class="p-8 space-y-8">
-                <section class="bg-pink-50/50 rounded-3xl p-6 border-2 border-pink-100 relative">
-                  <div class="flex items-center text-pink-600 mb-3 font-black">
-                    <span class="mr-2">🎯</span>
-                    專業對症下藥建議：
+                <section class="bg-pink-50 rounded-3xl p-5 border-2 border-pink-100">
+                  <div class="flex items-center text-pink-600 mb-2 font-black">
+                    <span class="mr-2">🎯</span> 專家點撥建議：
                   </div>
-                  <div class="text-slate-700 font-bold leading-relaxed whitespace-pre-line text-sm">
-                    ${currentRec.expertAdvice}
+                  <p class="text-sm font-bold text-slate-700 leading-relaxed">
+                    ${currentRec.advice}
+                  </p>
+                </section>
+
+                <section class="bg-indigo-50 rounded-3xl p-5 border-2 border-indigo-100">
+                  <div class="text-xs text-indigo-400 font-bold mb-3 uppercase tracking-widest">
+                    推薦開運配套
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    ${currentRec.products.map((p) => `
+                      <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-indigo-600 border border-indigo-100">
+                        ${p}
+                      </span>
+                    `).join('')}
                   </div>
                 </section>
 
-                <section class="bg-indigo-50/30 rounded-3xl p-6 border-2 border-indigo-100">
-                  <div class="flex items-center text-indigo-600 mb-4 font-black">
-                    <span class="mr-2">✅</span>
-                    系統為您整理的配套：
-                  </div>
-                  <div class="space-y-4">
-                    <div class="flex flex-col">
-                      <span class="text-slate-400 text-xs font-bold mb-1 uppercase tracking-widest">推薦祈福</span>
-                      <span class="font-black text-indigo-900 text-lg">${currentRec.ritual}</span>
-                    </div>
-                    <div class="flex flex-col">
-                      <span class="text-slate-400 text-xs font-bold mb-1 uppercase tracking-widest">開運輔助商品</span>
-                      <div class="flex flex-wrap gap-2 mt-1">
-                        ${currentRec.products.map((p) => `
-                          <span class="bg-white px-3 py-1 rounded-full text-xs font-bold border border-indigo-100 text-indigo-600 shadow-sm">
-                            ${p}
-                          </span>
-                        `).join('')}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                <div class="pt-4 text-center">
-                  <div class="bg-green-50 rounded-2xl p-4 mb-6 border border-green-200">
-                    <p class="text-green-800 font-bold text-xs flex items-center justify-center gap-2">
-                      <span>📨</span> 點擊下方按鈕後：
-                    </p>
-                    <p class="text-[11px] text-green-700 mt-1">
-                      選擇老師的 LINE 帳號，文字會自動填入<br/>
-                      您只需按下發送即可預約諮詢！
+                <div class="pt-2">
+                  <div class="bg-green-50 rounded-2xl p-4 mb-6 border border-green-100 flex items-start gap-3">
+                    <span class="text-green-500 shrink-0 text-lg">✨</span>
+                    <p class="text-[11px] text-green-700 font-bold leading-normal">
+                      點擊按鈕將直接帶入諮詢內容，您只需按下「發送」即可預約！
                     </p>
                   </div>
 
-                  <a
-                    href="${getLineHref()}"
-                    class="block w-full bg-[#06C755] text-white font-black py-5 rounded-[2rem] shadow-[0_8px_0_0_#059641] active:translate-y-[4px] active:shadow-none hover:bg-[#05b14c] transition-all text-xl no-underline"
+                  <button
+                    onclick="handleLineRedirect()"
+                    class="w-full bg-[#06C755] text-white font-black py-6 rounded-[2rem] shadow-[0_8px_0_0_#059641] active:translate-y-[4px] active:shadow-none transition-all text-xl flex items-center justify-center"
                   >
-                    點我帶入文字並私訊 🚀
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-8 bg-yellow-50 rounded-3xl p-6 border-2 border-yellow-200">
-              <div class="flex items-start">
-                <div class="mr-3 shrink-0 text-yellow-600 text-lg">⚠️</div>
-                <div class="text-xs text-yellow-900 leading-relaxed font-medium">
-                  <p class="font-black mb-1 text-sm">💡 老師的溫馨提醒：</p>
-                  任何開運及祈福都不能保證做幾次會有效果，每個人能量不同、感受不同。但每做一次都能提升運勢，穩定磁場是轉運的關鍵。持續積累能量，好運遲早會發生！
+                    <span class="mr-3 text-2xl">💬</span>
+                    私訊老師對症下藥 🚀
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </main>
 
-        <footer class="text-center text-slate-300 text-[10px] mt-4 px-4 pb-10">
-          © 專業命理諮詢服務 | 心誠則靈 能量加持 🌸
+        <footer class="text-center text-slate-300 text-[10px] pb-10">
+          © 專業命理諮詢服務 🌸 心誠則靈
         </footer>
       `;
     }
