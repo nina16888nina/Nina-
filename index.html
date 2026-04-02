@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>客製化轉運站</title>
+  <title>安沂命理工作室</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#FFFDF9] text-slate-800 font-sans">
@@ -14,6 +14,7 @@
       { id: 'love', label: '感情問題', emoji: '💖', border: 'border-pink-200' },
       { id: 'wealth', label: '財運提升', emoji: '💰', border: 'border-yellow-200' },
       { id: 'career', label: '事業轉運', emoji: '🚀', border: 'border-blue-200' },
+      { id: 'villain', label: '小人問題', emoji: '⚔️', border: 'border-red-200' },
       { id: 'family', label: '家運穩固', emoji: '🏡', border: 'border-green-200' },
       { id: 'study', label: '小孩課業', emoji: '📖', border: 'border-purple-200' }
     ];
@@ -22,27 +23,38 @@
       love: {
         ritual: '桃花轉運・貴人引動祈福 🌹',
         products: ['人緣鹽 🧼', '能量香氛 ✨', '芙蓉精油 🌿'],
-        advice: '💖 感情對症下藥：求對象、合盤除小人、減少爭吵，讓彼此更好溝通，找回甜蜜磁場。'
+        advice: '💖 感情對症下藥：求對象、合盤除小人、減少爭吵，讓彼此更好溝通，找回甜蜜磁場。',
+        guide: '除了藉由祈福引動貴人，平日多展現笑容、練習正向溝通，能讓感情修復得更快。'
       },
       wealth: {
         ritual: '鎮煞護財・補財庫祈福 🧧',
         products: ['招財鹽 🪙', '羅盤化煞 🧭', '能量香氛 ✨'],
-        advice: '💰 財運對症下藥：除了補財庫，建議諮詢專屬財位「安財甕」，鎖住財氣不漏財。'
+        advice: '💰 財運對症下藥：除了補財庫，建議諮詢專屬財位「安財甕」，鎖住財氣不漏財。',
+        guide: '補財庫是為了留住財氣，平日勤儉佈施、穩定情緒，能讓財源流動更順暢。'
       },
       career: {
-        ritual: '斬小人・事業破局祈福 ⚔️',
+        ritual: '事業破局・流年轉運祈福 📈',
         products: ['羅盤化煞 🧭', '淨化鹽 🧂', '能量香氛 ✨'],
-        advice: '🚀 事業對症下藥：掌控流年大運，針對辦公桌位化煞，提升貴人助力，避開是非。'
+        advice: '🚀 事業對症下藥：掌控流年大運轉換期。配合辦公桌位化煞，讓貴人顯現，事業路一飛沖天！',
+        guide: '轉運能幫您避開阻礙，但專業技能的充實與待人接物的圓融，是事業成功的基石。'
+      },
+      villain: {
+        ritual: '斬小人・制化官非祈福 ⚔️',
+        products: ['羅盤化煞 🧭', '淨化鹽 🧂', '芙蓉沐浴乳 🛀'],
+        advice: '⚔️ 小人對症下藥：針對流年五鬼星制化。找出煞位淨化磁場，讓小人退散、貴人環繞。',
+        guide: '磁場淨化能減少口舌是非，平日謹言慎行、不道人長短，是最高級的防小人良藥。'
       },
       family: {
         ritual: '祭祖孝親・穩定家運祈福 🕯️',
         products: ['淨化鹽 🧂', '芙蓉沐浴乳 🛀', '羅盤化煞 🧭'],
-        advice: '🏡 家運對症下藥：陽宅磁場校正，找出不和諧因素，針對個人八字調整居住能量。'
+        advice: '🏡 家運對症下藥：陽宅磁場校正，找出家中的煞位。調整居住能量，讓全家人相處更和諧。',
+        guide: '能量調整能改善氛圍，但家人的溝通與包容需要時間培養，和氣生財是恆久的道理。'
       },
       study: {
         ritual: '文昌開運・心神安定祈福 📝',
         products: ['芙蓉精油 🌿', '淨化鹽 🧂', '能量香氛 ✨'],
-        advice: '📖 課業對症下藥：找出個人文昌方位。針對學習弱點進行引導，安定心神，事半功倍。'
+        advice: '📖 課業對症下藥：找出孩子的個人文昌方位。進行佈置與能量引導，學習事半功倍！',
+        guide: '文昌位能增強專注力，但持之以恆的讀書習慣與家長的鼓勵，才是成績進步的主因。'
       }
     };
 
@@ -67,39 +79,44 @@
 
     function renderHome() {
       return `
-        <header class="bg-white border-b-4 border-yellow-300 py-12 px-4 text-center shadow-sm">
+        <header class="bg-white border-b-4 border-yellow-300 py-10 px-4 text-center shadow-sm">
           <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-xs mb-3">
-             🌸 專業命理諮詢・對症下藥
+             🌸 專業命理諮詢・客製化轉運方案
           </div>
-          <h1 class="text-3xl font-black text-slate-900 mb-2">客製化轉運站</h1>
-          <p class="mt-2 text-slate-600 font-black text-base tracking-wide">
+          <h1 class="text-3xl font-black text-slate-900 mb-2">安沂命理工作室</h1>
+          <p class="mt-2 text-slate-600 font-black text-lg">
             翻轉運勢找安沂，順遂不遲疑 ✨
           </p>
         </header>
 
         <main class="max-w-md mx-auto px-4 py-8">
           <div class="space-y-6">
-            <h2 class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
-              <span class="text-yellow-500">⭐</span>
-              請選取您的諮詢類別
-            </h2>
+            <div class="text-center">
+              <h2 class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
+                <span class="text-yellow-500">⭐</span>
+                請選取您想改善的項目
+              </h2>
+              <p class="text-xs text-slate-400 mt-2 italic">點選後將為您精準對症下藥</p>
+            </div>
+
             <div class="grid grid-cols-1 gap-4">
               ${SITUATIONS.map((sit) => `
                 <button
                   onclick="selectSituation('${sit.id}')"
-                  class="flex items-center p-6 bg-white rounded-[2rem] border-2 ${sit.border} shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] active:translate-y-1 transition-all text-left w-full"
+                  class="flex items-center p-6 bg-white rounded-[2rem] border-2 ${sit.border} shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] active:translate-y-1 transition-all text-left group w-full"
                 >
-                  <span class="text-4xl mr-4">${sit.emoji}</span>
+                  <span class="text-4xl mr-4 group-hover:scale-110 transition-transform">${sit.emoji}</span>
                   <span class="text-lg font-black text-slate-800 flex-1">${sit.label}</span>
-                  <span class="text-yellow-400 text-xl">⚡</span>
+                  <span class="w-5 h-5 text-slate-300 group-hover:text-yellow-400 text-xl">›</span>
                 </button>
               `).join('')}
             </div>
           </div>
         </main>
 
-        <footer class="text-center text-slate-300 text-[10px] pb-10">
-          © 專業命理諮詢服務 🌸 心誠則靈
+        <footer class="text-center text-slate-300 text-[10px] pb-10 px-4">
+          © 安沂命理工作室 🌸 心誠則靈<br/>
+          翻轉運勢找安沂，順遂不遲疑
         </footer>
       `;
     }
@@ -109,12 +126,12 @@
       const currentSit = SITUATIONS.find(s => s.id === selectedId);
 
       return `
-        <header class="bg-white border-b-4 border-yellow-300 py-12 px-4 text-center shadow-sm">
+        <header class="bg-white border-b-4 border-yellow-300 py-10 px-4 text-center shadow-sm">
           <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-xs mb-3">
-             🌸 專業命理諮詢・對症下藥
+             🌸 專業命理諮詢・客製化轉運方案
           </div>
-          <h1 class="text-3xl font-black text-slate-900 mb-2">客製化轉運站</h1>
-          <p class="mt-2 text-slate-600 font-black text-base tracking-wide">
+          <h1 class="text-3xl font-black text-slate-900 mb-2">安沂命理工作室</h1>
+          <p class="mt-2 text-slate-600 font-black text-lg">
             翻轉運勢找安沂，順遂不遲疑 ✨
           </p>
         </header>
@@ -123,15 +140,15 @@
           <div class="space-y-6">
             <button
               onclick="goBack()"
-              class="flex items-center font-bold text-slate-400 hover:text-indigo-600"
+              class="flex items-center font-bold text-slate-400 hover:text-indigo-600 transition-colors"
             >
-              ← 返回重新選擇
+              ← 返回項目清單
             </button>
 
-            <div class="bg-white rounded-[2.5rem] shadow-xl border-4 border-slate-900 overflow-hidden">
-              <div class="bg-slate-900 p-8 text-center text-white">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl border-4 border-slate-900 overflow-hidden">
+              <div class="bg-slate-900 p-8 text-center text-white relative">
                 <div class="text-5xl mb-3">${currentSit.emoji}</div>
-                <h2 class="text-2xl font-black italic">諮詢方案已備妥</h2>
+                <h2 class="text-2xl font-black tracking-widest italic uppercase">Diagnosis Report</h2>
               </div>
 
               <div class="p-8 space-y-8">
@@ -139,32 +156,58 @@
                   <div class="flex items-center text-pink-600 mb-2 font-black">
                     <span class="mr-2">🎯</span> 專家點撥建議：
                   </div>
-                  <p class="text-sm font-bold text-slate-700 leading-relaxed">
+                  <p class="text-sm font-bold text-slate-700 leading-relaxed italic">
                     ${currentRec.advice}
                   </p>
                 </section>
 
                 <section class="bg-indigo-50 rounded-3xl p-5 border-2 border-indigo-100">
-                  <div class="text-xs text-indigo-400 font-bold mb-3 uppercase tracking-widest">
-                    推薦開運配套
+                  <div class="text-[10px] text-indigo-400 font-bold mb-3 uppercase tracking-[0.2em] flex items-center">
+                    <span class="mr-1">✨</span> 建議開運配套
                   </div>
                   <div class="flex flex-wrap gap-2">
                     ${currentRec.products.map((p) => `
-                      <span class="bg-white px-3 py-1 rounded-full text-xs font-bold text-indigo-600 border border-indigo-100">
+                      <span class="bg-white px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-600 border border-indigo-100 shadow-sm">
                         ${p}
                       </span>
                     `).join('')}
                   </div>
                 </section>
 
-                <div class="pt-2">
-                  <div class="bg-green-50 rounded-2xl p-4 mb-6 border border-green-100 flex items-start gap-3">
-                    <span class="text-green-500 shrink-0 text-lg">✨</span>
-                    <p class="text-[11px] text-green-700 font-bold leading-normal">
-                      點擊按鈕將直接帶入諮詢內容，您只需按下「發送」即可預約！
-                    </p>
+                <section class="bg-yellow-50 rounded-3xl p-5 border-2 border-yellow-200">
+                  <div class="flex items-center text-yellow-700 mb-2 font-black text-sm">
+                    <span class="mr-1.5">💡</span> 開運指南：
                   </div>
+                  <p class="text-[13px] text-slate-600 leading-relaxed font-medium">
+                    ${currentRec.guide}
+                    <span class="block mt-3 text-red-600 font-black text-[11px] bg-white/50 p-2 rounded-lg border border-red-100">
+                      ⚠️ 老師提醒：開運商品及祈福都是輔助，自身努力也很重要！
+                    </span>
+                  </p>
+                </section>
 
+                <div class="pt-4 border-t border-slate-100">
+                  <p class="text-center text-[10px] text-slate-400 font-bold mb-4">👇 私訊預約只需簡單三步 👇</p>
+                  <div class="grid grid-cols-3 gap-2">
+                    <div class="bg-slate-50 rounded-2xl p-3 text-center flex flex-col items-center">
+                      <div class="bg-yellow-400 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black mb-2">1</div>
+                      <div class="text-lg text-slate-400 mb-1">➡️</div>
+                      <span class="text-[9px] font-bold text-slate-600">進入 LINE</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-3 text-center flex flex-col items-center">
+                      <div class="bg-yellow-400 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black mb-2">2</div>
+                      <div class="text-lg text-slate-400 mb-1">🙋</div>
+                      <span class="text-[9px] font-bold text-slate-600">選定安沂</span>
+                    </div>
+                    <div class="bg-green-50 rounded-2xl p-3 text-center flex flex-col items-center border border-green-100">
+                      <div class="bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black mb-2">3</div>
+                      <div class="text-lg text-green-500 mb-1">📨</div>
+                      <span class="text-[9px] font-bold text-green-600">按下傳送</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-2">
                   <button
                     onclick="handleLineRedirect()"
                     class="w-full bg-[#06C755] text-white font-black py-6 rounded-[2rem] shadow-[0_8px_0_0_#059641] active:translate-y-[4px] active:shadow-none transition-all text-xl flex items-center justify-center"
@@ -178,8 +221,9 @@
           </div>
         </main>
 
-        <footer class="text-center text-slate-300 text-[10px] pb-10">
-          © 專業命理諮詢服務 🌸 心誠則靈
+        <footer class="text-center text-slate-300 text-[10px] pb-10 px-4">
+          © 安沂命理工作室 🌸 心誠則靈<br/>
+          翻轉運勢找安沂，順遂不遲疑
         </footer>
       `;
     }
