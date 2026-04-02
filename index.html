@@ -41,7 +41,7 @@
       villain: {
         ritual: '斬小人・制化官非祈福 ⚔️',
         products: ['羅盤化煞 🧭', '淨化鹽 🧂', '芙蓉沐浴乳 🛀'],
-        advice: '⚔️ 小人對症下藥：針對流年五鬼星制化。找出煞位淨化磁場，讓小人退散、貴人環繞。',
+        advice: '⚔️ 小人對症下藥：針對流年「五鬼」星制化。找出煞位淨化磁場，讓小人退散、貴人環繞。',
         guide: '磁場淨化能減少口舌是非，平日謹言慎行、不道人長短，是最高級的防小人良藥。'
       },
       family: {
@@ -65,6 +65,7 @@
 
       const currentSit = SITUATIONS.find(s => s.id === selectedId);
       const currentRec = RECOMMENDATIONS[selectedId];
+      const lineId = "@455tjzbh";
 
       const message =
         `老師您好！我想預約諮詢 ✨\n` +
@@ -73,7 +74,7 @@
         `📦 建議配套：${currentRec.products.join('、')}\n\n` +
         `我想針對我的問題「對症下藥」進行一對一諮詢！🎯\n翻轉運勢找安沂，順遂不遲疑！`;
 
-      const finalUrl = `https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
+      const finalUrl = `https://line.me/R/oaMessage/${lineId}/?${encodeURIComponent(message)}`;
       window.location.href = finalUrl;
     }
 
@@ -81,9 +82,9 @@
       return `
         <header class="bg-white border-b-4 border-yellow-300 py-10 px-4 text-center shadow-sm">
           <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-xs mb-3">
-             🌸 專業命理諮詢・客製化轉運方案
+             🌸 專業命理諮詢・對症下藥
           </div>
-          <h1 class="text-3xl font-black text-slate-900 mb-2">安沂命理工作室</h1>
+          <h1 class="text-3xl font-black text-slate-900 mb-2 tracking-tighter">安沂命理工作室</h1>
           <p class="mt-2 text-slate-600 font-black text-lg">
             翻轉運勢找安沂，順遂不遲疑 ✨
           </p>
@@ -96,7 +97,7 @@
                 <span class="text-yellow-500">⭐</span>
                 請選取您想改善的項目
               </h2>
-              <p class="text-xs text-slate-400 mt-2 italic">點選後將為您精準對症下藥</p>
+              <p class="text-xs text-slate-400 mt-2 italic font-medium">點選後將為您生成專屬轉運建議方案</p>
             </div>
 
             <div class="grid grid-cols-1 gap-4">
@@ -128,9 +129,9 @@
       return `
         <header class="bg-white border-b-4 border-yellow-300 py-10 px-4 text-center shadow-sm">
           <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-xs mb-3">
-             🌸 專業命理諮詢・客製化轉運方案
+             🌸 專業命理諮詢・對症下藥
           </div>
-          <h1 class="text-3xl font-black text-slate-900 mb-2">安沂命理工作室</h1>
+          <h1 class="text-3xl font-black text-slate-900 mb-2 tracking-tighter">安沂命理工作室</h1>
           <p class="mt-2 text-slate-600 font-black text-lg">
             翻轉運勢找安沂，順遂不遲疑 ✨
           </p>
@@ -140,9 +141,9 @@
           <div class="space-y-6">
             <button
               onclick="goBack()"
-              class="flex items-center font-bold text-slate-400 hover:text-indigo-600 transition-colors"
+              class="flex items-center font-bold text-slate-400 hover:text-indigo-600 transition-colors px-2"
             >
-              ← 返回項目清單
+              ← 返回重選項目
             </button>
 
             <div class="bg-white rounded-[2.5rem] shadow-2xl border-4 border-slate-900 overflow-hidden">
@@ -156,7 +157,7 @@
                   <div class="flex items-center text-pink-600 mb-2 font-black">
                     <span class="mr-2">🎯</span> 專家點撥建議：
                   </div>
-                  <p class="text-sm font-bold text-slate-700 leading-relaxed italic">
+                  <p class="text-sm font-bold text-slate-700 leading-relaxed">
                     ${currentRec.advice}
                   </p>
                 </section>
@@ -187,22 +188,19 @@
                 </section>
 
                 <div class="pt-4 border-t border-slate-100">
-                  <p class="text-center text-[10px] text-slate-400 font-bold mb-4">👇 私訊預約只需簡單三步 👇</p>
-                  <div class="grid grid-cols-3 gap-2">
-                    <div class="bg-slate-50 rounded-2xl p-3 text-center flex flex-col items-center">
-                      <div class="bg-yellow-400 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black mb-2">1</div>
-                      <div class="text-lg text-slate-400 mb-1">➡️</div>
-                      <span class="text-[9px] font-bold text-slate-600">進入 LINE</span>
+                  <p class="text-center text-[10px] text-slate-400 font-bold mb-4 uppercase tracking-tighter">👇 點擊私訊後只需最後一步 👇</p>
+                  <div class="grid grid-cols-2 gap-3 px-4">
+                    <div class="bg-slate-50 rounded-2xl p-4 text-center flex flex-col items-center">
+                      <div class="text-2xl mb-2">👤</div>
+                      <span class="text-[10px] font-bold text-slate-600 italic leading-tight text-center">
+                        加入安沂<br/>LINE 官方帳號
+                      </span>
                     </div>
-                    <div class="bg-slate-50 rounded-2xl p-3 text-center flex flex-col items-center">
-                      <div class="bg-yellow-400 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black mb-2">2</div>
-                      <div class="text-lg text-slate-400 mb-1">🙋</div>
-                      <span class="text-[9px] font-bold text-slate-600">選定安沂</span>
-                    </div>
-                    <div class="bg-green-50 rounded-2xl p-3 text-center flex flex-col items-center border border-green-100">
-                      <div class="bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black mb-2">3</div>
-                      <div class="text-lg text-green-500 mb-1">📨</div>
-                      <span class="text-[9px] font-bold text-green-600">按下傳送</span>
+                    <div class="bg-green-50 rounded-2xl p-4 text-center flex flex-col items-center border border-green-100">
+                      <div class="text-2xl mb-2">✅</div>
+                      <span class="text-[10px] font-bold text-green-600 italic leading-tight text-center">
+                        按下發送<br/>即可預約
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -213,8 +211,11 @@
                     class="w-full bg-[#06C755] text-white font-black py-6 rounded-[2rem] shadow-[0_8px_0_0_#059641] active:translate-y-[4px] active:shadow-none transition-all text-xl flex items-center justify-center"
                   >
                     <span class="mr-3 text-2xl">💬</span>
-                    私訊老師對症下藥 🚀
+                    私訊安沂對症下藥 🚀
                   </button>
+                  <p class="text-center text-[10px] text-slate-400 mt-4 font-bold">
+                    官方 LINE ID: @455tjzbh
+                  </p>
                 </div>
               </div>
             </div>
