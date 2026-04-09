@@ -1,250 +1,262 @@
-<!doctype html>
-<html lang="zh-Hant">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>安沂命理工作室</title>
+  <title>安沂拾光</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#FFFDF9] text-slate-800 font-sans">
-  <div id="app"></div>
+<body>
+  <div id="root"></div>
 
-  <script>
-    const SITUATIONS = [
-      { id: 'love', label: '感情問題', emoji: '💖', border: 'border-pink-200' },
-      { id: 'wealth', label: '財運提升', emoji: '💰', border: 'border-yellow-200' },
-      { id: 'career', label: '事業轉運', emoji: '🚀', border: 'border-blue-200' },
-      { id: 'villain', label: '小人問題', emoji: '⚔️', border: 'border-red-200' },
-      { id: 'family', label: '家運穩固', emoji: '🏡', border: 'border-green-200' },
-      { id: 'study', label: '小孩課業', emoji: '📖', border: 'border-purple-200' }
-    ];
+  <script type="module">
+    import React, { useState, useEffect } from 'https://esm.sh/react@18.3.1';
+    import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client';
+    import {
+      ChevronRight,
+      Home,
+      Heart,
+      User,
+      Baby,
+      Sparkles,
+      Compass,
+      Calendar,
+      ArrowLeft,
+      Flame,
+      Users,
+      BookOpen
+    } from 'https://esm.sh/lucide-react@0.468.0';
 
-    const RECOMMENDATIONS = {
-      love: {
-        ritual: '桃花轉運・貴人引動祈福 🌹',
-        products: ['人緣鹽 🧼', '能量香氛 ✨', '芙蓉精油 🌿'],
-        advice: '💖 感情對症下藥：求對象、合盤除小人、減少爭吵，讓彼此更好溝通，找回甜蜜磁場。',
-        guide: '除了藉由祈福引動貴人，平日多展現笑容、練習正向溝通，能讓感情修復得更快。'
-      },
-      wealth: {
-        ritual: '鎮煞護財・補財庫祈福 🧧',
-        products: ['招財鹽 🪙', '羅盤化煞 🧭', '能量香氛 ✨'],
-        advice: '💰 財運對症下藥：除了補財庫，建議諮詢專屬財位「安財甕」，鎖住財氣不漏財。',
-        guide: '補財庫是為了留住財氣，平日勤儉佈施、穩定情緒，能讓財源流動更順暢。'
-      },
-      career: {
-        ritual: '事業破局・流年轉運祈福 📈',
-        products: ['羅盤化煞 🧭', '淨化鹽 🧂', '能量香氛 ✨'],
-        advice: '🚀 事業對症下藥：掌控流年大運轉換期。配合辦公桌位化煞，讓貴人顯現，事業路一飛沖天！',
-        guide: '轉運能幫您避開阻礙，但專業技能的充實與待人接物的圓融，是事業成功的基石。'
-      },
-      villain: {
-        ritual: '斬小人・制化官非祈福 ⚔️',
-        products: ['羅盤化煞 🧭', '淨化鹽 🧂', '芙蓉沐浴乳 🛀'],
-        advice: '⚔️ 小人對症下藥：針對流年「五鬼」星制化。找出煞位淨化磁場，讓小人退散、貴人環繞。',
-        guide: '磁場淨化能減少口舌是非，平日謹言慎行、不道人長短，是最高級的防小人良藥。'
-      },
-      family: {
-        ritual: '祭祖孝親・穩定家運祈福 🕯️',
-        products: ['淨化鹽 🧂', '芙蓉沐浴乳 🛀', '羅盤化煞 🧭'],
-        advice: '🏡 家運對症下藥：陽宅磁場校正，找出家中的煞位。調整居住能量，讓全家人相處更和諧。',
-        guide: '能量調整能改善氛圍，但家人的溝通與包容需要時間培養，和氣生財是恆久的道理。'
-      },
-      study: {
-        ritual: '文昌開運・心神安定祈福 📝',
-        products: ['芙蓉精油 🌿', '淨化鹽 🧂', '能量香氛 ✨'],
-        advice: '📖 課業對症下藥：找出孩子的個人文昌方位。進行佈置與能量引導，學習事半功倍！',
-        guide: '文昌位能增強專注力，但持之以恆的讀書習慣與家長的鼓勵，才是成績進步的主因。'
-      }
-    };
+    // 假設的 LIFF ID (您之後在 LINE Developers 後台申請後替換)
+    const LiffId = "YOUR_LIFF_ID";
 
-    let selectedId = null;
+    const App = () => {
+      const [step, setStep] = useState('home');
+      const [currentCategory, setCurrentCategory] = useState(null);
+      const [liffInitialized, setLiffInitialized] = useState(false);
 
-    function handleLineRedirect() {
-      if (!selectedId) return;
+      // 初始化 LINE LIFF
+      useEffect(() => {
+        const initLiff = async () => {
+          try {
+            // 這裡在實際環境中會載入 LINE SDK
+            // await liff.init({ liffId: LiffId });
+            setLiffInitialized(true);
+          } catch (err) {
+            console.error("LIFF 載入失敗", err);
+          }
+        };
+        initLiff();
+      }, []);
 
-      const currentSit = SITUATIONS.find(s => s.id === selectedId);
-      const currentRec = RECOMMENDATIONS[selectedId];
-      const lineId = "@455tjzbh";
+      const categories = {
+        mom: {
+          id: 'mom',
+          icon: React.createElement(Baby, { className: "w-6 h-6" }),
+          title: "育兒教養",
+          subtitle: "個性 / 學習 / 情緒 / 八字",
+          questions: [
+            { text: "情緒起伏大，動不動就尖叫大哭", result: "【能量分析：情緒風暴期】建議報名【小孩八字諮詢】，由 Nina 深度拆解孩子的情緒地雷。" },
+            { text: "愛唱反調、你說東他偏要往西", result: "【能量分析：意志力碰撞】建議透過【小孩八字諮詢】確認孩子的才華屬性，學習正確的溝通頻率。" },
+            { text: "學習不專心、坐不住、容易分心", result: "【能量分析：文昌頻率偏移】建議預約【小孩八字諮詢】，找出最適合孩子的學習方式。" },
+            { text: "社交恐懼、在外面退縮不敢說話", result: "【能量分析：保護色過重】建議進行【收驚祈福】，並透過【小孩八字諮詢】建立自信。" },
+            { text: "夜晚常驚醒、睡不穩、容易做惡夢", result: "【能量分析：磁場受擾】建議報名【小孩八字諮詢】，針對生辰進行專屬避煞建議。" }
+          ]
+        },
+        love: {
+          id: 'love',
+          icon: React.createElement(Heart, { className: "w-6 h-6" }),
+          title: "感情人際",
+          subtitle: "桃花 / 溝通 / 婆媳",
+          questions: [
+            { text: "單身許久，感覺桃花能量被阻擋", result: "【能量分析：桃花滯留】建議先以【開運海鹽】洗滌磁場，再以【羅盤】尋找您的『紅鸞位』。" },
+            { text: "婆媳育兒觀念衝突、生活被干預", result: "【能量分析：能量侵蝕】建議使用【羅盤】檢測客廳氣場，並預約【空間隔離祈福】與【家運諮詢】。" },
+            { text: "長輩言語刻薄、在背後指點心力交瘁", result: "【能量分析：負能滲透】建議隨身配戴海鹽袋，由 Nina 進行【轉運祈福】。" }
+          ]
+        },
+        general: {
+          id: 'general',
+          icon: React.createElement(User, { className: "w-6 h-6" }),
+          title: "個人運勢",
+          subtitle: "事業 / 財運 / 官司 / 小人",
+          questions: [
+            { text: "職場上有小人放冷箭、被造謠中傷", result: "【能量分析：暗影入侵】建議透過【羅盤】確認辦公桌方位，並進行【避小人祈福】。" },
+            { text: "法律訴訟膠著、判決不如預期", result: "【能量分析：紛擾籠罩】建議以【羅盤】檢測住家方位，安排【消災化厄祈福】。" },
+            { text: "合約糾紛、公文流程一直延宕卡住", result: "【能量分析：行政阻滯】建議用【羅盤】校對書房位，搭配【補運祈福】儀式。" }
+          ]
+        },
+        home: {
+          id: 'home',
+          icon: React.createElement(Home, { className: "w-6 h-6" }),
+          title: "家運風水",
+          subtitle: "除穢 / 搬家 / 磁場重整",
+          questions: [
+            { text: "家人情緒都不好，家裡氣氛壓抑", result: "【能量分析：空間穢氣沉積】建議進行【全屋海鹽大淨化】，並預約【居家淨化祈福】。" }
+          ]
+        }
+      };
 
-      const message =
-        `老師您好！我想預約諮詢 ✨\n` +
-        `📍 我的狀況：${currentSit.label} ${currentSit.emoji}\n` +
-        `🕯️ 建議祈福：${currentRec.ritual}\n` +
-        `📦 建議配套：${currentRec.products.join('、')}\n\n` +
-        `我想針對我的問題「對症下藥」進行一對一諮詢！🎯\n翻轉運勢找安沂，順遂不遲疑！`;
+      const handleCategorySelect = (cat) => {
+        setCurrentCategory(categories[cat]);
+        setStep('quiz');
+      };
 
-      const finalUrl = `https://line.me/R/oaMessage/${lineId}/?${encodeURIComponent(message)}`;
-      window.location.href = finalUrl;
-    }
+      const handleQuizSelect = (index) => {
+        setCurrentCategory({ ...currentCategory, selectedQuiz: index });
+        setStep('result');
+      };
 
-    function renderHome() {
-      return `
-        <header class="bg-white border-b-4 border-yellow-300 py-10 px-4 text-center shadow-sm">
-          <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-xs mb-3">
-             🌸 專業命理諮詢・對症下藥
-          </div>
-          <h1 class="text-3xl font-black text-slate-900 mb-2 tracking-tighter">安沂命理工作室</h1>
-          <p class="mt-2 text-slate-600 font-black text-lg">
-            翻轉運勢找安沂，順遂不遲疑 ✨
-          </p>
-        </header>
+      // 核心功能：自動傳送訊息給官方帳號
+      const handleBooking = async () => {
+        const selectedQuestion = currentCategory.questions[currentCategory.selectedQuiz].text;
+        const categoryName = currentCategory.title;
 
-        <main class="max-w-md mx-auto px-4 py-8">
-          <div class="space-y-6">
-            <div class="text-center">
-              <h2 class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
-                <span class="text-yellow-500">⭐</span>
-                請選取您想改善的項目
-              </h2>
-              <p class="text-xs text-slate-400 mt-2 italic font-medium">點選後將為您生成專屬轉運建議方案</p>
-            </div>
+        // 設定要自動傳送的文字內容
+        const messageText = `Nina 您好，我剛在 App 完成了檢測：\n\n【類別】：${categoryName}\n【遇到的問題】：${selectedQuestion}\n\n我想預約進一步的深度諮詢/祈福服務，請幫我安排時間，謝謝！`;
 
-            <div class="grid grid-cols-1 gap-4">
-              ${SITUATIONS.map((sit) => `
-                <button
-                  onclick="selectSituation('${sit.id}')"
-                  class="flex items-center p-6 bg-white rounded-[2rem] border-2 ${sit.border} shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] active:translate-y-1 transition-all text-left group w-full"
-                >
-                  <span class="text-4xl mr-4 group-hover:scale-110 transition-transform">${sit.emoji}</span>
-                  <span class="text-lg font-black text-slate-800 flex-1">${sit.label}</span>
-                  <span class="w-5 h-5 text-slate-300 group-hover:text-yellow-400 text-xl">›</span>
-                </button>
-              `).join('')}
-            </div>
-          </div>
-        </main>
+        // 判斷是否在 LINE 環境中
+        if (window.liff && window.liff.isInClient()) {
+          try {
+            await window.liff.sendMessages([{
+              type: 'text',
+              text: messageText
+            }]);
+            // 傳送成功後關閉視窗回到聊天室，或顯示成功訊息
+            window.liff.closeWindow();
+          } catch (error) {
+            console.error("發送失敗", error);
+            // 備案：如果發送失敗，直接開啟連結
+            window.location.href = `https://line.me/R/oaMessage/@455tjzbh/?${encodeURIComponent(messageText)}`;
+          }
+        } else {
+          // 非 LINE 環境（如瀏覽器預覽），直接導向對話框並帶入文字
+          window.location.href = `https://line.me/R/oaMessage/@455tjzbh/?${encodeURIComponent(messageText)}`;
+        }
+      };
 
-        <footer class="text-center text-slate-300 text-[10px] pb-10 px-4">
-          © 安沂命理工作室 🌸 心誠則靈<br/>
-          翻轉運勢找安沂，順遂不遲疑
-        </footer>
-      `;
-    }
+      const reset = () => {
+        setStep('home');
+        setCurrentCategory(null);
+      };
 
-    function renderResult() {
-      const currentRec = RECOMMENDATIONS[selectedId];
-      const currentSit = SITUATIONS.find(s => s.id === selectedId);
+      return React.createElement(
+        'div',
+        { className: "flex items-center justify-center min-h-screen bg-[#f3f0ec] p-4 font-sans" },
+        React.createElement(
+          'div',
+          { className: "w-full max-w-md bg-[#fdfaf8] rounded-[50px] shadow-2xl overflow-hidden border-[10px] border-white relative h-[820px] flex flex-col" },
 
-      return `
-        <header class="bg-white border-b-4 border-yellow-300 py-10 px-4 text-center shadow-sm">
-          <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-yellow-700 font-bold text-xs mb-3">
-             🌸 專業命理諮詢・對症下藥
-          </div>
-          <h1 class="text-3xl font-black text-slate-900 mb-2 tracking-tighter">安沂命理工作室</h1>
-          <p class="mt-2 text-slate-600 font-black text-lg">
-            翻轉運勢找安沂，順遂不遲疑 ✨
-          </p>
-        </header>
+          // Header
+          React.createElement(
+            'div',
+            { className: "pt-12 px-8 text-center" },
+            step === 'home' &&
+              React.createElement(
+                'div',
+                { className: "animate-in fade-in duration-700" },
+                React.createElement('h1', { className: "text-2xl font-bold text-[#8e7d6f] tracking-tight" }, "安沂拾光"),
+                React.createElement(
+                  'p',
+                  { className: "text-[#b5a496] text-[10px] mt-1 tracking-widest leading-relaxed" },
+                  "我是會預測孩子今天會不會哭鬧的命理師 Nina"
+                )
+              )
+          ),
 
-        <main class="max-w-md mx-auto px-4 py-8">
-          <div class="space-y-6">
-            <button
-              onclick="goBack()"
-              class="flex items-center font-bold text-slate-400 hover:text-indigo-600 transition-colors px-2"
-            >
-              ← 返回重選項目
-            </button>
+          // Content
+          React.createElement(
+            'div',
+            { className: "flex-1 overflow-y-auto px-7 py-6" },
 
-            <div class="bg-white rounded-[2.5rem] shadow-2xl border-4 border-slate-900 overflow-hidden">
-              <div class="bg-slate-900 p-8 text-center text-white relative">
-                <div class="text-5xl mb-3">${currentSit.emoji}</div>
-                <h2 class="text-2xl font-black tracking-widest italic uppercase">Diagnosis Report</h2>
-              </div>
+            step === 'home' &&
+              React.createElement(
+                'div',
+                { className: "animate-in fade-in slide-in-from-bottom-4 duration-500" },
+                React.createElement(
+                  'p',
+                  { className: "text-center text-[#5a4a42] mb-10 text-sm" },
+                  "親愛的，今天想為哪方面的能量",
+                  React.createElement('br'),
+                  "尋找出口？"
+                ),
+                React.createElement(
+                  'div',
+                  { className: "grid grid-cols-1 gap-4" },
+                  Object.keys(categories).map((key) =>
+                    React.createElement(
+                      'button',
+                      {
+                        key,
+                        onClick: () => handleCategorySelect(key),
+                        className: "flex items-center gap-5 p-5 bg-white border border-[#f0e6dd] rounded-[30px] hover:shadow-md transition-all"
+                      },
+                      React.createElement(
+                        'div',
+                        { className: "p-4 bg-[#f9f6f3] rounded-2xl text-[#c5b4a2]" },
+                        categories[key].icon
+                      ),
+                      React.createElement(
+                        'div',
+                        { className: "text-left flex-1 font-bold text-[#5a4a42]" },
+                        categories[key].title
+                      ),
+                      React.createElement(ChevronRight, { size: 18, className: "text-[#d7c7ba]" })
+                    )
+                  )
+                )
+              ),
 
-              <div class="p-8 space-y-8">
-                <section class="bg-pink-50 rounded-3xl p-5 border-2 border-pink-100">
-                  <div class="flex items-center text-pink-600 mb-2 font-black">
-                    <span class="mr-2">🎯</span> 專家點撥建議：
-                  </div>
-                  <p class="text-sm font-bold text-slate-700 leading-relaxed">
-                    ${currentRec.advice}
-                  </p>
-                </section>
+            step === 'quiz' &&
+              React.createElement(
+                'div',
+                { className: "animate-in slide-in-from-right duration-300" },
+                React.createElement(
+                  'button',
+                  {
+                    onClick: reset,
+                    className: "flex items-center gap-2 text-[#b5a496] text-[10px] font-bold mb-8 uppercase"
+                  },
+                  React.createElement(ArrowLeft, { size: 14 }),
+                  " Back"
+                ),
+                React.createElement(
+                  'h2',
+                  { className: "text-xl font-bold text-[#8e7d6f] mb-6" },
+                  currentCategory.title,
+                  "檢測"
+                ),
+                React.createElement(
+                  'div',
+                  { className: "space-y-4" },
+                  currentCategory.questions.map((q, idx) =>
+                    React.createElement(
+                      'button',
+                      {
+                        key: idx,
+                        onClick: () => handleQuizSelect(idx),
+                        className: "w-full text-left p-6 bg-white border border-[#f0e6dd] rounded-[28px] shadow-sm flex justify-between items-center group"
+                      },
+                      React.createElement(
+                        'span',
+                        { className: "text-sm font-medium text-[#5a4a42]" },
+                        q.text
+                      ),
+                      React.createElement(ChevronRight, { size: 16, className: "text-[#d7c7ba]" })
+                    )
+                  )
+                )
+              ),
 
-                <section class="bg-indigo-50 rounded-3xl p-5 border-2 border-indigo-100">
-                  <div class="text-[10px] text-indigo-400 font-bold mb-3 uppercase tracking-[0.2em] flex items-center">
-                    <span class="mr-1">✨</span> 建議開運配套
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    ${currentRec.products.map((p) => `
-                      <span class="bg-white px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-600 border border-indigo-100 shadow-sm">
-                        ${p}
-                      </span>
-                    `).join('')}
-                  </div>
-                </section>
-
-                <section class="bg-yellow-50 rounded-3xl p-5 border-2 border-yellow-200">
-                  <div class="flex items-center text-yellow-700 mb-2 font-black text-sm">
-                    <span class="mr-1.5">💡</span> 開運指南：
-                  </div>
-                  <p class="text-[13px] text-slate-600 leading-relaxed font-medium">
-                    ${currentRec.guide}
-                    <span class="block mt-3 text-red-600 font-black text-[11px] bg-white/50 p-2 rounded-lg border border-red-100">
-                      ⚠️ 老師提醒：開運商品及祈福都是輔助，自身努力也很重要！
-                    </span>
-                  </p>
-                </section>
-
-                <div class="pt-4 border-t border-slate-100">
-                  <p class="text-center text-[10px] text-slate-400 font-bold mb-4 uppercase tracking-tighter">👇 點擊私訊後只需最後一步 👇</p>
-                  <div class="grid grid-cols-2 gap-3 px-4">
-                    <div class="bg-slate-50 rounded-2xl p-4 text-center flex flex-col items-center">
-                      <div class="text-2xl mb-2">👤</div>
-                      <span class="text-[10px] font-bold text-slate-600 italic leading-tight text-center">
-                        加入安沂<br/>LINE 官方帳號
-                      </span>
-                    </div>
-                    <div class="bg-green-50 rounded-2xl p-4 text-center flex flex-col items-center border border-green-100">
-                      <div class="text-2xl mb-2">✅</div>
-                      <span class="text-[10px] font-bold text-green-600 italic leading-tight text-center">
-                        按下發送<br/>即可預約
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="pt-2">
-                  <button
-                    onclick="handleLineRedirect()"
-                    class="w-full bg-[#06C755] text-white font-black py-6 rounded-[2rem] shadow-[0_8px_0_0_#059641] active:translate-y-[4px] active:shadow-none transition-all text-xl flex items-center justify-center"
-                  >
-                    <span class="mr-3 text-2xl">💬</span>
-                    私訊安沂對症下藥 🚀
-                  </button>
-                  <p class="text-center text-[10px] text-slate-400 mt-4 font-bold">
-                    官方 LINE ID: @455tjzbh
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        <footer class="text-center text-slate-300 text-[10px] pb-10 px-4">
-          © 安沂命理工作室 🌸 心誠則靈<br/>
-          翻轉運勢找安沂，順遂不遲疑
-        </footer>
-      `;
-    }
-
-    function renderApp() {
-      document.getElementById('app').innerHTML = selectedId ? renderResult() : renderHome();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function selectSituation(id) {
-      selectedId = id;
-      renderApp();
-    }
-
-    function goBack() {
-      selectedId = null;
-      renderApp();
-    }
-
-    renderApp();
-  </script>
-</body>
-</html>
+            step === 'result' &&
+              React.createElement(
+                'div',
+                { className: "animate-in zoom-in-95 duration-400" },
+                React.createElement(
+                  'div',
+                  { className: "bg-white p-8 rounded-[40px] border border-[#f0e6dd] shadow-sm text-center" },
+                  React.createElement(
+                    'div',
+                    { className: "flex justify-center gap-5 mb-8" },
+                    React.createElement(BookOpen, { size: 18, className: "text-[#c5b4a2] opacity-60" }),
+                    React.createElement(Compass, { size: 18, className: "text-[#c5b4a2] opacity-60" }),
+                    React.createElement(Flame, { size: 18, className: "text-[#c5b4a2] opacity-
