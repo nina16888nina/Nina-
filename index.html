@@ -41,9 +41,17 @@
     }
 
     .header {
-      padding: 48px 32px 0;
+      padding: 40px 32px 0;
       text-align: center;
       flex-shrink: 0;
+    }
+
+    .handle {
+      width: 48px;
+      height: 4px;
+      background: #e5d9cf;
+      margin: 0 auto 24px;
+      border-radius: 999px;
     }
 
     .brand-title {
@@ -60,6 +68,7 @@
       font-size: 10px;
       letter-spacing: 0.25em;
       line-height: 1.7;
+      font-weight: 500;
     }
 
     .content {
@@ -91,8 +100,6 @@
       width: 100%;
       border: 1px solid #f0e6dd;
       background: #ffffff;
-      border-radius: 30px;
-      padding: 20px;
       cursor: pointer;
       transition: all 0.2s ease;
       color: #5a4a42;
@@ -111,6 +118,8 @@
       align-items: center;
       gap: 20px;
       text-align: left;
+      padding: 20px;
+      border-radius: 30px;
     }
 
     .category-icon-wrap {
@@ -123,6 +132,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .category-btn:hover .category-icon-wrap {
+      background: #c5b4a2;
+      color: #ffffff;
     }
 
     .category-main {
@@ -130,14 +145,14 @@
     }
 
     .category-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       color: #5a4a42;
       margin: 0 0 4px;
     }
 
     .category-subtitle {
-      font-size: 12px;
+      font-size: 10px;
       color: #b5a496;
       margin: 0;
       line-height: 1.6;
@@ -160,16 +175,21 @@
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.2em;
       margin-bottom: 32px;
       cursor: pointer;
       padding: 0;
     }
 
     .section-title {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 700;
       color: #8e7d6f;
       margin: 0 0 24px;
+    }
+
+    .quiz-list {
+      gap: 16px;
     }
 
     .quiz-btn {
@@ -183,10 +203,15 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
 
+    .quiz-btn:hover {
+      border-color: #c5b4a2;
+    }
+
     .quiz-text {
       font-size: 14px;
       font-weight: 500;
       line-height: 1.7;
+      padding-right: 16px;
     }
 
     .result-card {
@@ -204,7 +229,6 @@
       gap: 20px;
       margin-bottom: 32px;
       color: #c5b4a2;
-      opacity: 0.6;
     }
 
     .result-box {
@@ -217,6 +241,7 @@
       font-size: 15px;
       margin-bottom: 32px;
       border: 1px solid #f5f0ed;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.03);
     }
 
     .result-btn {
@@ -275,11 +300,13 @@
     .icon-lg {
       width: 24px;
       height: 24px;
+      display: inline-block;
     }
 
     .icon-sm {
       width: 18px;
       height: 18px;
+      display: inline-block;
     }
 
     .fade-in {
@@ -308,7 +335,7 @@
       }
 
       .header {
-        padding: 36px 20px 0;
+        padding: 32px 20px 0;
       }
 
       .content {
@@ -328,6 +355,7 @@
 <body>
   <div class="app-shell">
     <div class="header">
+      <div class="handle"></div>
       <div id="homeHeader" class="fade-in">
         <h1 class="brand-title">安沂拾光</h1>
         <p class="brand-subtitle">我是會預測孩子今天會不會哭鬧的命理師 Nina</p>
@@ -336,14 +364,14 @@
 
     <div class="content">
       <section id="homeView" class="fade-in">
-        <p class="intro">親愛的，今天想為哪方面的能量<br>尋找出口？</p>
+        <p class="intro">親愛的，讓空間與靈魂深呼吸<br>找回屬於您的光亮方位</p>
         <div id="categoryList" class="category-list"></div>
       </section>
 
       <section id="quizView" class="hidden fade-in">
         <button id="backBtn" class="back-btn" type="button">
           <span id="backIcon"></span>
-          <span>Back</span>
+          <span>Back to menu</span>
         </button>
         <h2 id="quizTitle" class="section-title"></h2>
         <div id="quizList" class="quiz-list"></div>
@@ -352,7 +380,7 @@
       <section id="resultView" class="hidden fade-in">
         <div class="result-card">
           <div class="result-icons">
-            <span id="bookIcon"></span>
+            <span id="shieldIcon"></span>
             <span id="compassIcon"></span>
             <span id="flameIcon"></span>
           </div>
@@ -361,64 +389,66 @@
             <span id="calendarIcon"></span>
             <span id="resultBtnText"></span>
           </button>
-          <p class="result-note">點擊後將自動發送訊息至 Nina 的官方 LINE</p>
+          <p class="result-note">點擊後將自動發送訊息至 Nina 官方 LINE</p>
         </div>
       </section>
     </div>
 
     <div class="bottom-nav">
       <span id="navHome"></span>
-      <span id="navCompass"></span>
+      <span id="navUsers"></span>
       <span id="navUser"></span>
     </div>
   </div>
 
   <script>
-    const LiffId = "YOUR_LIFF_ID";
-
     const categories = {
       mom: {
         id: 'mom',
-        title: "育兒教養",
-        subtitle: "個性 / 學習 / 情緒 / 八字",
         icon: "baby",
+        title: "育兒教養",
+        subtitle: "情緒 / 唱反調 / 八字諮詢",
         questions: [
-          { text: "情緒起伏大，動不動就尖叫大哭", result: "【能量分析：情緒風暴期】建議報名【小孩八字諮詢】，由 Nina 深度拆解孩子的情緒地雷。" },
-          { text: "愛唱反調、你說東他偏要往西", result: "【能量分析：意志力碰撞】建議透過【小孩八字諮詢】確認孩子的才華屬性，學習正確的溝通頻率。" },
-          { text: "學習不專心、坐不住、容易分心", result: "【能量分析：文昌頻率偏移】建議預約【小孩八字諮詢】，找出最適合孩子的學習方式。" },
-          { text: "社交恐懼、在外面退縮不敢說話", result: "【能量分析：保護色過重】建議進行【收驚祈福】，並透過【小孩八字諮詢】建立自信。" },
-          { text: "夜晚常驚醒、睡不穩、容易做惡夢", result: "【能量分析：磁場受擾】建議報名【小孩八字諮詢】，針對生辰進行專屬避煞建議。" }
+          { text: "情緒起伏大，動不動就尖叫大哭", result: "【能量分析：情緒風暴期】建議報名【小孩八字諮詢】，由 Nina 深度拆解孩子的情緒地雷，並配合羅盤校正房間氣場。" },
+          { text: "愛唱反調、你說東他偏要往西", result: "【能量分析：意志力碰撞】代表孩子天生帶有極強自主星。建議透過【小孩八字諮詢】確認孩子屬性，並在文昌位放置淨化海鹽。" },
+          { text: "學習不專心、坐不住、容易分心", result: "【能量分析：文昌頻率偏移】建議預約【小孩八字諮詢】，找出適合的學習方式，並用羅盤定位文昌位。" },
+          { text: "社交恐懼、在外面退縮不敢說話", result: "【能量分析：保護色過重】建議進行【收驚祈福】，並透過【小孩八字諮詢】了解人際財星，建立安全感。" }
         ]
       },
       love: {
         id: 'love',
-        title: "感情人際",
-        subtitle: "桃花 / 溝通 / 婆媳",
         icon: "heart",
+        title: "感情人際",
+        subtitle: "爛桃花 / 婆媳 / 感情修復",
         questions: [
-          { text: "單身許久，感覺桃花能量被阻擋", result: "【能量分析：桃花滯留】建議先以【開運海鹽】洗滌磁場，再以【羅盤】尋找您的『紅鸞位』。" },
-          { text: "婆媳育兒觀念衝突、生活被干預", result: "【能量分析：能量侵蝕】建議使用【羅盤】檢測客廳氣場，並預約【空間隔離祈福】與【家運諮詢】。" },
-          { text: "長輩言語刻薄、在背後指點心力交瘁", result: "【能量分析：負能滲透】建議隨身配戴海鹽袋，由 Nina 進行【轉運祈福】。" }
+          { text: "總是遇到不對的人，爛桃花不斷", result: "【能量分析：磁場招陰】您的紅鸞位可能落入了『空亡』或受穢氣干擾。建議先以【能量海鹽】洗滌，由 Nina 透過【斬斷孽緣祈福】清理負能，並用羅盤重新定位正緣方位。" },
+          { text: "感情中一直被騙、被劈腿或被背叛", result: "【能量分析：防禦網崩解】這源於個人氣場的破洞。建議進行【識人明智祈福】，並使用羅盤檢測家中的『合和位』是否受損，避免招惹渣男體質。" },
+          { text: "在感情中極度卑微、容易自我懷疑", result: "【能量分析：自我頻率過低】建議進行【自信回歸祈福】。透過【小孩八字/個人八字諮詢】了解您的情緣屬性，找回在愛情中的主導權。" },
+          { text: "單身許久，感覺桃花能量被阻擋", result: "【能量分析：桃花滯留】建議先以開運海鹽洗滌，再以【羅盤】尋找您的『紅鸞位』布置。建議參與【良緣祈福】啟動引力。" },
+          { text: "婆媳育兒觀念衝突、生活被干預", result: "【能量分析：能量侵蝕】建議羅盤檢測『避煞位』，預約【空間隔離祈福】與家運諮詢，守住小家庭防線。" }
         ]
       },
       general: {
         id: 'general',
+        icon: "briefcase",
         title: "個人運勢",
-        subtitle: "事業 / 財運 / 官司 / 小人",
-        icon: "user",
+        subtitle: "事業升遷 / 財運 / 避小人",
         questions: [
-          { text: "職場上有小人放冷箭、被造謠中傷", result: "【能量分析：暗影入侵】建議透過【羅盤】確認辦公桌方位，並進行【避小人祈福】。" },
-          { text: "法律訴訟膠著、判決不如預期", result: "【能量分析：紛擾籠罩】建議以【羅盤】檢測住家方位，安排【消災化厄祈福】。" },
-          { text: "合約糾紛、公文流程一直延宕卡住", result: "【能量分析：行政阻滯】建議用【羅盤】校對書房位，搭配【補運祈福】儀式。" }
+          { text: "事業遇到瓶頸，升遷總是被壓制", result: "【能量分析：氣運受壓】建議以【羅盤】重新定出辦公室『青龍位』，並安排【官祿祈福】點亮事業燈。" },
+          { text: "有財無庫，錢賺得多但守不住", result: "【能量分析：財庫漏水】建議以【羅盤】精準定位『明財位』放置海鹽座，並預約【補財庫祈福】封堵漏點。" },
+          { text: "職場小人造謠，名譽受到毀損", result: "【能量分析：暗影入侵】建議以【羅盤】避開辦公桌『三煞位』。搭配【避小人祈福】建立能量盾牌。" },
+          { text: "法律訴訟膠著、判決不如預期", result: "【能量分析：紛擾籠罩】建議羅盤測量住家『延年位』，安排【消災化厄祈福】轉化官司壓力。" }
         ]
       },
       home: {
         id: 'home',
-        title: "家運風水",
-        subtitle: "除穢 / 搬家 / 磁場重整",
         icon: "home",
+        title: "家運風水",
+        subtitle: "除穢 / 病符 / 鄰里干擾",
         questions: [
-          { text: "家人情緒都不好，家裡氣氛壓抑", result: "【能量分析：空間穢氣沉積】建議進行【全屋海鹽大淨化】，並預約【居家淨化祈福】。" }
+          { text: "家人莫名生病，且查不出原因", result: "【能量分析：病符入宅】建議以【羅盤】找出『二黑病符位』進行掃除，搭配【健康祈福】與海鹽大淨化。" },
+          { text: "鄰居磁場干擾，或是對門煞氣重", result: "【能量分析：外煞衝擊】建議在門口使用羅盤定位，安設避煞物品，並由 Nina 進行【安宅護佑祈福】。" },
+          { text: "搬新家後事事不順，爭吵變多", result: "【能量分析：地靈磨合失敗】建議以【羅盤】重新定出家主旺位，配合【入厝補運祈福】儀式重整氣場。" }
         ]
       }
     };
@@ -426,8 +456,7 @@
     const state = {
       step: 'home',
       currentCategory: null,
-      selectedQuiz: null,
-      liffInitialized: false
+      selectedQuiz: null
     };
 
     function iconSvg(name, cls = "icon") {
@@ -437,33 +466,27 @@
         home: `<svg ${common}><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>`,
         heart: `<svg ${common}><path d="m12 21-1.9-1.7C5 14.8 2 12.1 2 8.8 2 6 4.2 4 7 4c1.7 0 3.4.8 5 2.5C13.6 4.8 15.3 4 17 4c2.8 0 5 2 5 4.8 0 3.3-3 6-8.1 10.5L12 21z"/></svg>`,
         user: `<svg ${common}><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>`,
+        users: `<svg ${common}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
         baby: `<svg ${common}><circle cx="12" cy="8" r="4"/><path d="M10 3c1.5 0 2.5 1 2.5 2.5"/><path d="M8 14h8"/><path d="M7 21v-3a5 5 0 0 1 10 0v3"/></svg>`,
         compass: `<svg ${common}><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>`,
         calendar: `<svg ${common}><path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg>`,
         arrowLeft: `<svg ${common}><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`,
         flame: `<svg ${common}><path d="M12 3s4 4 4 8a4 4 0 1 1-8 0c0-2 1-4 4-8z"/><path d="M12 13s2 2 2 4a2 2 0 1 1-4 0c0-1 0.5-2 2-4z"/></svg>`,
-        bookOpen: `<svg ${common}><path d="M2 3h6a4 4 0 0 1 4 4v14a4 4 0 0 0-4-4H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a4 4 0 0 1 4-4h6z"/></svg>`
+        shieldCheck: `<svg ${common}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>`,
+        briefcase: `<svg ${common}><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M2 12h20"/></svg>`
       };
       return icons[name] || '';
     }
 
-    function setIcons() {
+    function setFixedIcons() {
       document.getElementById('backIcon').innerHTML = iconSvg('arrowLeft', 'icon-sm');
-      document.getElementById('bookIcon').innerHTML = iconSvg('bookOpen', 'icon-sm');
+      document.getElementById('shieldIcon').innerHTML = iconSvg('shieldCheck', 'icon-sm');
       document.getElementById('compassIcon').innerHTML = iconSvg('compass', 'icon-sm');
       document.getElementById('flameIcon').innerHTML = iconSvg('flame', 'icon-sm');
       document.getElementById('calendarIcon').innerHTML = iconSvg('calendar', 'icon-sm');
       document.getElementById('navHome').innerHTML = `<span class="nav-icon-active">${iconSvg('home')}</span>`;
-      document.getElementById('navCompass').innerHTML = `<span class="nav-icon-muted">${iconSvg('compass')}</span>`;
+      document.getElementById('navUsers').innerHTML = `<span class="nav-icon-muted">${iconSvg('users')}</span>`;
       document.getElementById('navUser').innerHTML = `<span class="nav-icon-muted">${iconSvg('user')}</span>`;
-    }
-
-    function initLiff() {
-      try {
-        state.liffInitialized = true;
-      } catch (err) {
-        console.error("LIFF 載入失敗", err);
-      }
     }
 
     function renderCategories() {
@@ -478,8 +501,8 @@
         btn.innerHTML = `
           <div class="category-icon-wrap">${iconSvg(cat.icon, 'icon-lg')}</div>
           <div class="category-main">
-            <p class="category-title">${cat.title}</p>
-            <p class="category-subtitle">${cat.subtitle}</p>
+            <div class="category-title">${cat.title}</div>
+            <div class="category-subtitle">${cat.subtitle}</div>
           </div>
           <span class="chevron">${iconSvg('chevronRight', 'icon-sm')}</span>
         `;
@@ -491,7 +514,7 @@
     function renderQuiz() {
       const quizTitle = document.getElementById('quizTitle');
       const quizList = document.getElementById('quizList');
-      quizTitle.textContent = `${state.currentCategory.title}檢測`;
+      quizTitle.textContent = `${state.currentCategory.title}諮詢`;
       quizList.innerHTML = '';
 
       state.currentCategory.questions.forEach((q, idx) => {
@@ -514,8 +537,8 @@
 
       resultText.textContent = q.result;
       resultBtnText.textContent = state.currentCategory.id === 'mom'
-        ? '報名小孩八字深度諮詢'
-        : '確認預約服務並傳送需求';
+        ? '預約小孩八字諮詢'
+        : '確認預約服務並傳訊';
     }
 
     function updateView() {
@@ -558,9 +581,7 @@
     async function handleBooking() {
       const selectedQuestion = state.currentCategory.questions[state.selectedQuiz].text;
       const categoryName = state.currentCategory.title;
-
-      const messageText =
-        `Nina 您好，我剛在 App 完成了檢測：\n\n【類別】：${categoryName}\n【遇到的問題】：${selectedQuestion}\n\n我想預約進一步的深度諮詢/祈福服務，請幫我安排時間，謝謝！`;
+      const messageText = `Nina 您好，我剛在 App 完成了檢測：\n\n【類別】：${categoryName}\n【問題】：${selectedQuestion}\n\n我想預約進一步的${state.currentCategory.id === 'mom' ? '小孩八字諮詢' : '深度諮詢/祈福服務'}，請幫我安排時間，謝謝！`;
 
       if (window.liff && typeof window.liff.isInClient === 'function' && window.liff.isInClient()) {
         try {
@@ -569,7 +590,6 @@
             window.liff.closeWindow();
           }
         } catch (error) {
-          console.error("發送失敗", error);
           window.location.href = `https://line.me/R/oaMessage/@455tjzbh/?${encodeURIComponent(messageText)}`;
         }
       } else {
@@ -585,8 +605,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      setIcons();
-      initLiff();
+      setFixedIcons();
       renderCategories();
       updateView();
 
